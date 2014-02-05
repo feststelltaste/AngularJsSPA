@@ -1,0 +1,96 @@
+<!--
+Document    : todoView.html
+Created on  : Jul 25, 2013
+Author      : Sandra Bergmeir sandrabergmeir@gmail.com, Johannes Koelbl <johannes.koelbl88@googlemail.com>
+Description : Design applied to prototype.
+-->
+
+<div class="todo-widget" data-ng-controller="todoController">
+    <div class="do-widget-headerbar">
+        <h2 class="pull-left">Todo Liste: <span data-ng-bind-html="todoWidget.title"></span></h2>
+        <a data-ng-click="removeWidget($index)" href=""><i class="glyphicon glyphicon-remove"></i></a>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="do-widget">
+        <div class="col-xs-2">
+            <img class="do-widget-icon"  src="img/icons/note_book_accept.png">
+        </div>
+        <!-- Filter Buttons-->
+        <div class="col-xs-6">
+            <div class="btn-group btn-group-sm do-radio-group input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i></span>
+                    <label class="filter-options btn btn-default" data-ng-repeat="filter in todoWidget.filterOptions">
+                    <input type="radio" data-ng-model="$parent.todoWidget.switchTodos" name="options" value="{{filter.value}}" />
+                    <span>{{filter.displayValue}}</span>
+                </label>
+            </div>
+        </div>
+        <!-- Search field-->
+        <div class="col-xs-4">
+            <div class="input-group input-group-sm">
+                <label for="searchTodo-{{todoWidget.id}}" class="input-group-addon"><i class="glyphicon glyphicon-search"></i></label>
+                <input id="searchTodo-{{todoWidget.id}}" class="form-control" type="search" placeholder="Search" data-ng-model="search">
+            </div>
+        </div>
+
+        <!-- ToDo List itself with input for new todos-->
+        <form data-ng-submit="addTodo()" novalidate name="addTodoForm" class="form-inline" data-role="form" >
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th><i class="glyphicon glyphicon-check"></i></th>
+                        <th>What</th>
+                        <th>Who</th>
+                        <th>Until</th>
+                        <th><span class="glyphicon glyphicon-plus-sign"></span> / <span class="glyphicon glyphicon-remove"></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- First row to enter a new todo -->
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div class="form-group do-validate">
+                                <input type="text" class="form-control" data-ng-model="todoWidget.todoText" required placeholder="Todo"/>
+                            </div>
+                        </td>
+                        <td >
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="todoWidget.todoResponsiblePerson" placeholder="Assignee"/>
+                            </div>
+                        </td>
+                        <td id="datepicker">
+                            <div class="input-append date input-group">
+                                <label for="dateInput-{{todoWidget.id}}" class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></label>
+                                <input type="text" id="dateInput-{{todoWidget.id}}" class="form-control" data-ng-model="todoWidget.todoDueDate" placeholder="mm/dd/yy" data-ng-datepicker>
+                            </div>                         
+                        </td>
+                        <td><button type="submit" data-ng-disabled="addTodoForm.$invalid" class="btn do-btn-primary"><span class="glyphicon glyphicon-plus"></span></button></td>
+                    </tr>
+
+                    <!-- following rows to dynamically display entered todos -->
+                    <tr class="done-{{todo.done}}" data-ng-repeat="todo in todoWidget.todos | filter:search" data-ng-show="todoWidget.switchTodos == 'all' || convertStringToBoolean(todoWidget.switchTodos) == todo.done">
+                        <td>
+                            <input type="checkbox" data-ng-model="todo.done" data-ng-click="changeTodo(todo)"/>
+                        </td>
+                        <td>
+                            <span contenteditable="true" data-ng-model-onblur data-ng-change="changeTodo(todo)" data-ng-model="todo.text" data-ng-bind-html="todo.text"></span>
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </td>
+                        <td>
+                            <span contenteditable="true" data-ng-model-onblur data-ng-change="changeTodo(todo)" data-ng-model="todo.responsiblePerson" data-ng-bind-html="todo.responsiblePerson"></span> 
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </td>
+                        <td>
+                            {{todo.dueDate | date:'mediumDate'}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default" data-ng-click="removeTodo($index)"><span class="glyphicon glyphicon-remove"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

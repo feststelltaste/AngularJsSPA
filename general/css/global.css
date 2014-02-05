@@ -1,0 +1,131 @@
+/* 
+ * Document :
+ * Created on : 19.09.2013
+ * Author : Daniel Sauer <sauerda45569@th-nuernberg.de>
+ * Description : global css file included in index.html
+ * Hint: own classes are prepended by a leading "do-" (dropover) to differ them from bootstrap classes
+ */
+
+/* NAVIGATION */
+
+.navbar {
+    padding:0 10px;
+}
+.do-navbar-middle { 
+    display:table-cell; 
+    height:50px; 
+    vertical-align: middle; 
+}
+.navbar-header {
+    padding:0 10px;
+}
+.navbar-text {
+    margin: 0 10px;    
+}
+
+/* HEADERS */
+
+.do-slogan {
+    color:white; 
+    margin-bottom:30px;
+}
+.do-slogan h1 {
+    text-shadow:  0 -1px 1px #888888, 1px 0 1px #888888, 0 1px 1px #888888, -1px 0 1px #888888;    
+}
+.do-slogan h1 small {    
+    text-shadow:  0 -1px #cccccc, 1px 0 #cccccc, 0 1px #cccccc, -1px 0 #cccccc;
+    color:#555555;
+}
+.do-slogan p {
+    font-size:16px;
+    text-shadow: 1px 1px 1px #888888;
+}
+
+.modal h1 {
+    font-size: 22px;
+}
+
+.modal h2 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+/* FORMS */ 
+
+textarea {
+    resize:vertical;
+}
+
+.do-validate input.ng-invalid.ng-dirty, .do-validate textarea.ng-invalid.ng-dirty {
+    border-color: #FA787E;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(250, 120, 126, 0.6);
+}
+.do-validate input.ng-valid.ng-dirty, .do-validate textarea.ng-valid.ng-dirty {
+    border-color: #78FA89;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(120, 250, 137, 0.6);
+}
+
+
+/* BUTTONS */
+
+.do-btn-primary { 
+    color:#ffffff;
+    background: #ff7f00; /* Old browsers */
+    background: -moz-linear-gradient(top, #ff440e 0%, #ff7f00 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff440e), color-stop(100%,#ff7f00)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ff440e 0%,#ff7f00 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ff440e 0%,#ff7f00 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ff440e 0%,#ff7f00 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ff440e 0%,#ff7f00 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff440e', endColorstr='#ff7f00',GradientType=0 ); /* IE6-9 */
+}
+.do-btn-primary:hover, .do-btn-primary:active, .do-btn-primary:focus { 
+    color:#ffffff;
+    background: #ff7f00;
+    border-color: #ff440e;
+}
+
+/*ALERT and ANIMATION*/
+
+.alert {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    opacity: 0;
+}
+
+@-webkit-keyframes visible {
+    0% {
+        opacity: 1; /*visible*/
+        z-index: 1031;
+    }
+    50% {
+        opacity: 1; /*visible*/
+    }
+    100% {
+        opacity: 0; /*invisible*/
+        z-index: 1031;
+    }
+}
+
+@-moz-keyframes visible {
+    0% {
+        opacity: 1;
+        z-index: 1031;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        z-index: 1031;
+    }
+}
+
+.visible {
+    -webkit-animation-name: visible;
+    -webkit-animation-duration: 4s;
+    -moz-animation-name: visible;
+    -moz-animation-duration: 4s;
+}

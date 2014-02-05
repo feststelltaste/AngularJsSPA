@@ -1,0 +1,129 @@
+<!--
+Document : schedulingView.html
+Created on : Jul 28, 2013
+Author : Christian Wolter christian.wolter.42@gmail.com
+Description : Scheduling Widget Bar Design
+-->
+
+<div class="scheduling-widget" data-ng-controller="schedulingController">
+    <div class="do-widget-headerbar">
+        <h2 class="pull-left">Scheduling</h2>
+        <a data-ng-click="removeWidget($index)" href=""><i class="glyphicon glyphicon-remove"></i></a>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="do-widget">
+        <h3>
+            <img class="do-widget-icon" src="img/icons/calendar.png">
+            Event starts on: {{finalDate}}
+        </h3>
+        <!--Controllpannel to add new Date and enter User Name  -->
+        <div class="col-xs-12">
+            <div class="row do-widget-row">
+                <form data-ng-submit="addDate()" novalidate name="schedulingForm" class="form-horizontal" data-role="form" >
+                    <div class="col-xs-4">
+                        <input type="text" class="form-control" data-ng-model="schedulingName" placeholder="Your Name">
+                    </div>  
+                    <div class="col-xs-4">
+                        <div id="datepicker">
+                            <div class="input-append date input-group do-validate">
+                                <label for="dateInput-{{id}}" class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></label>
+                                <input type="text" id="dateInput-{{id}}" class="form-control" data-ng-model="datePickerDate" required placeholder="mm/dd/yyyy" data-ng-datepicker>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="col-xs-4">                   
+                        <button class="btn do-btn-primary" type="submit" data-ng-disabled="schedulingForm.$invalid">New date</button>
+                    </div>
+                </form>
+            </div>
+            <!--Create one bar for esch date in datelist-->
+            <div class="row do-widget-row voting-result-bars" data-ng-repeat="(date, value) in dateList">
+                <div>
+                    <span class="glyphicon glyphicon-user"></span> {{dateList[date].positiveUserList.length + dateList[date].undecidedUserList.length + dateList[date].negativeUserList.length}} Users voted for <b>{{date}}</b>
+                </div>
+                <a class="do-bar" data-toggle="modal" href="#scheduling-vote-modal-{{id}}" data-target="#scheduling-vote-modal-{{id}}" data-ng-click="setBarDate(date)">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" data-ng-style="{width: dateList[date].positivePercent}" data-toggle="tooltip"   title="{{dateList[date].positiveUsersString}}">{{dateList[date].positiveUserList.length}} Yes</div>
+                        <div class="progress-bar progress-bar-warning" data-ng-style="{width: dateList[date].undecidedPercent}" data-toggle="tooltip"  title="{{dateList[date].undecidedUsersString}}">{{dateList[date].undecidedUserList.length}} Maybe</div>
+                        <div class="progress-bar progress-bar-danger" data-ng-style="{width: dateList[date].negativePercent}" data-toggle="tooltip"  title="{{dateList[date].negativeUsersString}}">{{dateList[date].negativeUserList.length}} No</div>
+                    </div>
+                </a>
+                <!--Tooltip for users in progress bar-->
+                <script>
+                    $(function() {
+                        $("[data-toggle='tooltip']").tooltip({html: true, container: 'body'});
+                    });
+                </script>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade scheduling-vote-modal" id="scheduling-vote-modal-{{id}}" tabindex="-1" role="dialog" aria-labelledby="scheduling-vote-modal-Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">{{barDate}}</h3>                        
+                        <div class="row">
+                            <div class="col-xs-5 do-validate">
+                                <input type="text" class="form-control" id="modalName" data-ng-model="schedulingName" placeholder="Name" data-ng-keydown="checkUserExists()">  
+                                <div class="help-block" data-ng-show="checkUserExists()">{{schedulingName}} already voted for the {{barDate}}</div>
+                            </div>
+                            <div class="col-xs-7">
+                                <!--disable buttons if user already exists-->
+                                <button type="button" data-ng-disabled="checkUserExists()" class="btn btn-success" aria-hidden="true"  data-ng-click="addUser('positive')">Yes</button>
+                                <button type="button" data-ng-disabled="checkUserExists()" class="btn btn-warning" aria-hidden="true" data-ng-click="addUser('undecided')">Maybe</button>
+                                <button type="button" data-ng-disabled="checkUserExists()" class="btn btn-danger" aria-hidden="true" data-ng-click="addUser('negative')">No</button>
+                                <button type="button" class="btn btn-default" aria-hidden="true" name="removeUser" data-ng-click="removeUser()">remove User</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--show user lists-->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="clearfix visible-xs"></div>
+                            <div class="col-xs-6 col-sm-4 col-md-4">
+                                <ul class="voting-result-list">
+                                    <li><strong>Yes</strong></li>
+                                    <li>
+                                        <ul class="user-list">
+                                            <li data-ng-repeat="user in dateList[barDate].positiveUserList"> {{user}} </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="clearfix visible-xs"></div>
+                            <div class="col-xs-6 col-sm-4 col-md-4">
+                                <ul class="voting-result-list"> 
+                                    <li><strong>Maybe</strong></li>
+                                    <li>
+                                        <ul class="user-list"> 
+                                            <li data-ng-repeat="user in dateList[barDate].undecidedUserList"> {{user}} </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-6 col-sm-4 col-md-4">
+                                <ul class="voting-result-list">
+                                    <li><strong>No</strong></li>
+                                    <li>
+                                        <ul class="user-list"> 
+                                            <li data-ng-repeat="user in dateList[barDate].negativeUserList"> {{user}} </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer">   
+                            <button type="button" class="btn do-btn-primary" data-ng-click="setFinalDate()" data-dismiss="modal">set final date</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        </div>
+    </div>
+</div>

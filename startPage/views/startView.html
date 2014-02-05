@@ -1,0 +1,101 @@
+<!--
+Document    : startView
+Created on  : August 28, 2013
+Author      : Daniel Sauer
+Description : startPage for DropOver.at
+-->
+<link rel="stylesheet" href="startPage/css/start.css"> 
+
+<div data-ng-controller="startController">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".do-navbar-links">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="do-navbar-middle" title="zur Startseite" href="#"><img alt="DropOver.at" src="img/dropOver_logo_small.png" /></a>
+        </div>
+        <div class="collapse navbar-collapse do-navbar-links">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="general/views/aboutModal.html" data-target="#about-modal" data-toggle="modal">About Us</a></li>
+                <li><a href="general/views/privacyModal.html" data-target="#privacy-modal" data-toggle="modal">Data Privacy Statement</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="do-slogan">
+            <h1>DropOver<small> - Live your Event!</small></h1>
+            <p>DropOver is a web application to plan, organize, realization and wrap-up of your event.</p>               
+        </div>
+
+        <div class="row" >
+            <div class="col-sm-6">
+                <div class="thumbnail">                        
+                    <h3 class="text-center">Create your own event!</h3>
+                    <form data-ng-submit="createEvent()" novalidate name="createEventForm" class="form-horizontal do-validate" data-role="form" >
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="eventCreator">Your name</label>
+                            <div class="col-md-7">
+                                <input name="eventCreator" data-ng-model="event.creator" required data-ng-minlength="2" type="text" class="form-control" id="eventCreator" placeholder="John Doe">
+                                <div class='help-block' data-ng-show='createEventForm.eventCreator.$dirty'>
+                                    <span data-ng-show="createEventForm.eventCreator.$error.required">Please tell us your name.</span>
+                                    <span data-ng-show="createEventForm.eventCreator.$error.minlength">The minimum length is 2 characters.</span>
+                                </div>
+                            </div>                                
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="eventEmail">Your e-mail</label>
+                            <div class="col-md-7">
+                                <input type="email" class="form-control" id="eventEmail" name="eventEmail" data-ng-model="event.email" required placeholder="info@example.com">
+                                <div class="help-block" data-ng-show='createEventForm.eventEmail.$dirty'>
+                                    <span data-ng-show="createEventForm.eventEmail.$error.required">Please tell us your e-mail address</span>
+                                    <span data-ng-show="createEventForm.eventEmail.$error.email">This is not a valid e-mail address</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="eventTitle">Event Name</label>
+                            <div class="col-md-7">
+                                <input data-ng-model="event.title" name="eventTitle" required type="text" class="form-control" id="eventTitle" placeholder="Meeting with Carl">
+                                <div class="help-block" data-ng-show="createEventForm.eventTitle.$dirty && createEventForm.eventTitle.$error.required">Please tell us the title of your event.</div>                          
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="eventDescription">Description</label>
+                            <div class="col-md-7">
+                                <textarea data-ng-model="event.description" class="form-control" rows="5" id="eventDescription" placeholder="A short description of your event."></textarea>
+                            </div>                      
+                        </div>
+                        <div class="form-group">                            
+
+                            <div class="col-md-12 control-label">
+                                <button type="submit" id="create-event" class="btn btn-lg do-btn-primary pull-right" data-ng-disabled="createEventForm.$invalid">Create event!</button>
+                                <div class="text-left">
+                                    <small>
+                                        By clicking "Create Event!", you acknowledge that you have read and agreed to the
+                                        <a href="general/views/privacyModal.html" data-target="#privacy-modal" data-toggle="modal">privacy statement</a>
+                                        (and terms of use) of DropOver.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="thumbnail">
+                    <img class="img-responsive img-rounded" alt="DropOver - Dein Platz für dein Event!" src="img/startpageSample.png" />
+                </div>
+            </div>
+        </div>
+        <div class="do-picture-source">
+            Hintergrundbild: Albrecht E. Arnold  / <a href="http://www.pixelio.de" target="_blank">pixelio.de</a>
+        </div>
+    </div>
+</div>
+
+<!-- initialize modals -->
+<div class="modal fade" id="about-modal" tabindex="-1" role="dialog" aria-labelledby="about-modal-label" aria-hidden="true"></div>
+<div class="modal fade" id="privacy-modal" tabindex="-1" role="dialog" aria-labelledby="privacy-modal-label" aria-hidden="true"></div>

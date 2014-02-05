@@ -1,0 +1,51 @@
+<!--
+Document    : index
+Created on  : Jul 28, 2013
+Author      : Sandra Bergmeir sandrabergmeir@gmail.com, Johannes Koelbl <johannes.koelbl88@googlemail.com>
+Description : layout template - see: http://docs.angularjs.org/tutorial/step_07
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DropOver.at - Erstelle dein Event!</title>        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <!--"Bootstrap is not supported in the old Internet Explorer compatibility modes. 
+         To be sure you're using the latest rendering mode for IE, consider including the appropriate meta tag in your pages:"--> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+         <!--"To ensure proper rendering and touch zooming, add the viewport meta tag"
+              user-scalability must be disabled for fixed navbars to work on old android browsers --> 
+        <meta name="viewport" content="width=device-width, target-densityDpi=device-dpi, initial-scale=1.1, minimum-scale=1.0, maximum-scale=1.1, user-scalable=yes" >    
+  
+        <!-- stylesheets -->
+        <link rel="stylesheet" href="libs/bootstrap-3.0.0/css/bootstrap.css"/> <!-- new version -->
+        <link rel="stylesheet" href="libs/Datepicker/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="libs/angular-carousel/angular-carousel.min.css">
+               
+        <!-- individual stylesheets -->
+        <link rel="stylesheet" href="general/css/global.css">
+            
+    </head>
+    <body data-ng-app="mainApp">
+        <div data-ng-view></div>    
+        
+        <!-- general scripts -->
+        <script src="libs/jQuery/jQuery-1.10.2.js"></script> <!-- include jQuery BEFORE AngularJS for full jQuery support instead of jQLite -->
+        <script src="libs/angular-1.0.8/angular.js"></script> 
+        <script src="libs/angular-1.0.8/i18n/angular-locale_en-us.js"></script> <!-- set locale  -->
+        <script src="libs/angular-1.0.8/angular-sanitize.js"></script>   
+        <script src="libs/angular-1.0.8/angular-resource.js"></script>
+        <script src="libs/bootstrap-3.0.0/js/bootstrap.js"></script>
+        <script src="libs/Datepicker/bootstrap-datepicker.js"></script>
+        <script src="libs/angular-carousel/angular-mobile.js"></script>
+        <script src="libs/angular-carousel/angular-carousel.js"></script>
+        <script src="general/app.js"></script>
+        <script src="general/routes.js"></script>
+        
+        <!-- individual scripts -->
+        <script src="eventPage/js/eventController.js"></script>
+        <script src="widgets/comment/js/commentController.js"></script>
+        <script src="widgets/scheduling/js/schedulingController.js"></script>
+        <script src="widgets/todo/js/todoController.js"></script>
+        <script src="startPage/js/startController.js"></script>
+    </body>        
+</html>

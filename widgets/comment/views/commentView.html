@@ -1,0 +1,49 @@
+<!--
+Document	: comments.html
+Created on	: 28.07.2013
+Author          : Johannes Koelbl <johannes.koelbl88@googlemail.com>
+Description	: comment template
+-->
+
+<div data-ng-controller="commentController"> 
+    <div class="do-widget-headerbar">
+        <h2>Comments</h2>
+    </div>
+
+    <div class="do-widget">
+        <h3>
+            <img class="do-widget-icon" src="img/icons/comments.png">
+            Leave a comment on this event
+        </h3>
+
+        <div class="col-xs-12">
+            <div class="row do-widget-row">
+                <form data-ng-submit="addComment()" novalidate name="addCommentForm" class="form-horizontal do-validate" data-role="form" >
+                    <div class="col-xs-5 col-md-3">
+                        <input type="text" class="form-control" placeholder="Your name" data-ng-model="commentWidget.creator" data-required data-ng-minlength="2" />
+                    </div>
+                    <div class="col-xs-2 col-md-push-7">
+                        <button class="btn do-btn-primary" type="submit" data-ng-disabled="addCommentForm.$invalid">Comment</button>
+                    </div>
+                    <div class="visible-xs visible-sm clearfix"></div>
+                    <div class="col-xs-12 col-md-7 col-md-pull-2">
+                        <textarea class="form-control" rows="3" placeholder="Write a comment!" data-ng-model="commentWidget.content" data-required></textarea>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="row do-widget-row" data-ng-repeat="comment in commentWidget.comments | orderBy:commentWidget.predicate:reverse">
+                <div class="col-xs-7 col-md-3">
+                    <b data-ng-bind-html="comment.creator"></b> <br class="hidden-xs hidden-sm"> <span class="text-muted">wrote {{comment.since.formated}}</span>
+                </div>
+                <div class="col-xs-5 col-md-2 col-md-push-7">
+<!--                    <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<a href="#">Like</a>
+                    <span class="glyphicon glyphicon-thumbs-down"></span>&nbsp;<a href="#">Dislike</a>                    -->
+                </div> 
+                <div class="visible-xs visible-sm clearfix"></div>
+                <div class="col-xs-12 col-md-7 col-md-pull-2 do-comment-container">
+                    <div class="do-comment-content" data-ng-bind-html="comment.content"></div>
+                </div>
+            </div>
+        </div>
+    </div>

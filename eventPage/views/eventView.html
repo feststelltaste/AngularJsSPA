@@ -1,0 +1,92 @@
+<!--
+Document	: 
+Created on	: 28.07.2013
+Author          : Johannes Koelbl <johannes.koelbl88@googlemail.com>, Daniel Sauer <sauerda45569@th-nuernberg.de
+Description	:
+-->
+<link rel="stylesheet" href="eventPage/css/event.css">
+
+<div data-ng-controller="eventController">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-text pull-right">
+            <div class="do-navbar-middle">           
+                <a href=""><img width="29" src="img/icons/twitter-small.png"></a>
+                <a href=""><img width="29" src="img/icons/FB-f-Logo__blue_29.png"></a>
+                <a href=""><img width="29" src="img/icons/gplus-32.png"></a>
+            </div>
+        </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".doNavbarLinks">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="do-navbar-middle" title="zur Startseite" href="#"><img alt="DropOver.at" src="img/dropOver_logo_small.png" /></a>
+        </div>
+
+        <div class="collapse navbar-collapse doNavbarLinks">
+            <ul class="nav navbar-nav">
+                <li><a href="#" target="_blank"><i class="glyphicon glyphicon-file"></i> New Event</a></li>
+                <li><a href="general/views/aboutModal.html" data-target="#about-modal" data-toggle="modal">About Us</a></li>                
+            </ul>
+
+            <form class="">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" style="cursor: pointer"><i class="glyphicon glyphicon-bell"></i> Notifications<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><label class="checkbox"><input type="checkbox" />Get all</label></li>
+                            <li class="divider"></li>
+                            <li><label class="checkbox"><input type="checkbox" />Calendar Updates</label></li>
+                            <li><label class="checkbox"><input type="checkbox" />Location Updates</label></li>
+                            <li><label class="checkbox"><input type="checkbox" />New Comments</label></li>                        
+                        </ul>
+                    </li>
+                </ul>
+            </form>
+
+        </div>
+    </nav>
+
+    <div class="container">        
+        <div class="do-slogan">
+            <h1>
+                <span data-ng-bind-html="eventTitle"></span>
+                <!-- don't show an additional "s" for eventCreators with ending "s" -->
+                <small> - This is <span data-ng-bind-html="eventCreator"></span>' <span data-ng-show='eventCreator[eventCreator.length-1] != "s"'>s</span> event!</small>
+            </h1>
+            <p data-ng-bind-html="eventDescription"></p>             
+        </div>
+        
+        <div class="row" data-ng-switch data-on="getViewportWidth()" >
+            <div data-ng-switch-when="small">
+                <div class="col-xs-12">
+                    <ul id="do-widget-carousel" data-rn-carousel data-rn-carousel-watch data-rn-carousel-indicator="true" data-rn-carousel-index="widgetCarousel.currentWidget">
+                        <li id="do-widget-{{$index}}" data-ng-repeat='widget in widgets'>
+                            <div id='{{widget.id}}' data-ng-include data-src="widget.src"></div>
+                        </li>
+                    </ul>                
+                </div>
+            </div>
+            <div id="do-widget-no-carousel" data-ng-switch-when="large">
+                <div draggable="true" data-ng-repeat="widget in widgets" class="col-md-6" id="{{widget.id}}" data-ng-include data-src="widget.src"></div>
+            </div>
+        </div>
+
+        <div class="row">            
+            <div id="comment-widget" class="col-xs-12" data-ng-include data-src="'widgets/comment/views/commentView.html'">                
+            </div>            
+        </div>
+    </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-bottom do-iconbar">
+        <div class="container">
+            <a data-ng-click="createTodoList()" id="do-create-todo-list" href=""><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;<img class="do-widget-icon"  src="img/icons/note_book_accept.png"></a>
+            <a data-ng-click="createScheduling()" id="do-create-scheduling-list" href=""><i class="glyphicon glyphicon-plus-sign"></i>&nbsp;<img class="do-widget-icon"  src="img/icons/calendar.png"></a>
+        </div>
+    </div>
+    <div class='alert alert-danger'><strong>Warning!</strong><span></span></div>
+</div>
+
+<!-- initialize modals -->
+<div class="modal fade" id="about-modal" tabindex="-1" role="dialog" aria-labelledby="about-modal-label" aria-hidden="true"></div>
